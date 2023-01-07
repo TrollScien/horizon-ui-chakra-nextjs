@@ -3,20 +3,24 @@ import tableDataCheck from "./tableDataCheck.json";
 
 export const columnsDataCheck = [
   {
-    Header: "NAME",
-    accessor: "name",
-  },
-  {
-    Header: "PROGRESS",
-    accessor: "progress",
-  },
-  {
-    Header: "QUANTITY",
+    Header: "CONTRATO",
     accessor: "quantity",
   },
   {
-    Header: "DATE",
+    Header: "PLAN",
+    accessor: "name",
+  },
+  {
+    Header: "ESTADO",
+    accessor: "status",
+  },
+  {
+    Header: "FECHA",
     accessor: "date",
+  },
+  {
+    Header: "DETALLES",
+    accessor: "details",
   },
 ];
 export const columnsDataComplex = [

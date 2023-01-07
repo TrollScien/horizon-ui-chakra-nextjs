@@ -1,26 +1,26 @@
 [
   {
-    "name":"Horizon UI PRO",
+    "name":"Falla SF",
     "status": "Approved",
     "date": "18 Apr 2022",
-    "progress": 75.5  
+    "progress": 100 
   },
   {
-    "name":"Horizon UI Free",
+    "name":"Falla Sebastopol",
     "status": "Disable",
     "date": "18 Apr 2022",
     "progress": 25.5  
   },
   {
-    "name":"Marketplace",
+    "name":"Falla ISP",
     "status": "Error",
     "date": "20 May 2021",
     "progress": 90  
   },
   {
-    "name":"Weekly Updates",
+    "name":"Mantenimiento programado",
     "status": "Approved",
     "date": "12 Jul 2021",
-    "progress": 50.5  
+    "progress": 100 
   }
 ]

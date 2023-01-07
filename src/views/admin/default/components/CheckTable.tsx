@@ -8,6 +8,7 @@ import {
   Th,
   Thead,
   Tr,
+  Icon,
   useColorModeValue
 } from '@chakra-ui/react'
 import { useMemo } from 'react'
@@ -27,7 +28,7 @@ import Card from 'components/card/Card'
 import Menu from 'components/menu/MainMenu'
 import {} from 'components/charts/LineAreaChart'
 import { TableProps } from '../variables/columnsData'
-
+import { MdCheckCircle, MdCancel, MdOutlineError,MdAddCircle } from 'react-icons/md'
 export default function CheckTable (props: TableProps) {
   const { columnsData, tableData } = props
 
@@ -70,7 +71,7 @@ export default function CheckTable (props: TableProps) {
           fontWeight='700'
           lineHeight='100%'
         >
-          Check Table
+          Servicios Contratados
         </Text>
         <Menu />
       </Flex>
@@ -110,43 +111,76 @@ export default function CheckTable (props: TableProps) {
               <Tr {...row.getRowProps()} key={index}>
                 {row.cells.map((cell, index: number) => {
                   let data
-                  if (cell.column.Header === 'NAME') {
+                  if (cell.column.Header === 'PLAN') {
                     data = (
                       <Flex align='center'>
-                        <Checkbox
-                          defaultChecked={cell.value[1]}
-                          colorScheme='brandScheme'
-                          me='10px'
-                        />
                         <Text color={textColor} fontSize='sm' fontWeight='700'>
-                          {cell.value[0]}
+                          {cell.value}
                         </Text>
                       </Flex>
                     )
-                  } else if (cell.column.Header === 'PROGRESS') {
+                  } else if (cell.column.Header === 'ESTADO') {
                     data = (
                       <Flex align='center'>
+                        <Icon
+                          w='24px'
+                          h='24px'
+                          me='5px'
+                          color={
+                            cell.value === 'ACTIVO'
+                              ? 'green.500'
+                              : cell.value === 'TERMINADO'
+                              ? 'red.500'
+                              : cell.value === 'SUSPENDIDO'
+                              ? 'orange.500'
+                              : null
+                          }
+                          as={
+                            cell.value === 'ACTIVO'
+                              ? MdCheckCircle
+                              : cell.value === 'TERMINADO'
+                              ? MdCancel
+                              : cell.value === 'SUSPENDIDO'
+                              ? MdOutlineError
+                              : null
+                          }
+                        />
                         <Text
                           me='10px'
                           color={textColor}
                           fontSize='sm'
                           fontWeight='700'
                         >
-                          {cell.value}%
+                          {cell.value}
                         </Text>
                       </Flex>
                     )
-                  } else if (cell.column.Header === 'QUANTITY') {
+                  } else if (cell.column.Header === 'CONTRATO') {
                     data = (
                       <Text color={textColor} fontSize='sm' fontWeight='700'>
                         {cell.value}
                       </Text>
                     )
-                  } else if (cell.column.Header === 'DATE') {
+                  } else if (cell.column.Header === 'FECHA') {
                     data = (
                       <Text color={textColor} fontSize='sm' fontWeight='700'>
                         {cell.value}
                       </Text>
+                    )
+                  }
+                  else if (cell.column.Header === 'DETALLES') {
+                    data = (
+                        <Icon
+                          w='18px'
+                          h='18px'
+                          me='5px'
+                          color={textColor}
+                          as={
+                            cell.value === 'detalles'
+                              ? MdAddCircle
+                              : MdAddCircle
+                          }
+                        />
                     )
                   }
                   return (
@@ -161,6 +195,7 @@ export default function CheckTable (props: TableProps) {
                     </Td>
                   )
                 })}
+
               </Tr>
             )
           })}

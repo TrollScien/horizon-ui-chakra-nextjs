@@ -1,10 +1,11 @@
 import { Icon } from '@chakra-ui/react'
 import {
   MdBarChart,
-  MdPerson,
+  MdPaid,
   MdHome,
-  MdLock,
-  MdOutlineShoppingCart
+  MdHeadsetMic,
+  MdPayment,
+  MdSpeed
 } from 'react-icons/md'
 
 // Admin Imports
@@ -20,19 +21,19 @@ import { IRoute } from 'types/navigation'
 
 const routes: IRoute[] = [
   {
-    name: 'Main Dashboard',
+    name: 'Inicio',
     layout: '/admin',
     path: '/default',
     icon: <Icon as={MdHome} width='20px' height='20px' color='inherit' />,
     component: MainDashboard
   },
   {
-    name: 'NFT Marketplace',
+    name: 'Reportar pago',
     layout: '/admin',
     path: '/nft-marketplace',
     icon: (
       <Icon
-        as={MdOutlineShoppingCart}
+        as={MdPayment}
         width='20px'
         height='20px'
         color='inherit'
@@ -42,31 +43,31 @@ const routes: IRoute[] = [
     secondary: true
   },
   {
-    name: 'Data Tables',
+    name: 'Consulta de saldo',
     layout: '/admin',
-    icon: <Icon as={MdBarChart} width='20px' height='20px' color='inherit' />,
+    icon: <Icon as={MdPaid} width='20px' height='20px' color='inherit' />,
     path: '/data-tables',
     component: DataTables
   },
   {
-    name: 'Profile',
+    name: 'Uso de datos',
     layout: '/admin',
     path: '/profile',
-    icon: <Icon as={MdPerson} width='20px' height='20px' color='inherit' />,
+    icon: <Icon as={MdBarChart} width='20px' height='20px' color='inherit' />,
     component: Profile
   },
   {
-    name: 'Sign In',
+    name: 'Soporte',
     layout: '/auth',
     path: '/sign-in',
-    icon: <Icon as={MdLock} width='20px' height='20px' color='inherit' />,
+    icon: <Icon as={MdHeadsetMic} width='20px' height='20px' color='inherit' />,
     component: SignInCentered
   },
   {
-    name: 'RTL Admin',
+    name: 'Test de velocidad',
     layout: '/rtl',
     path: '/rtl-default',
-    icon: <Icon as={MdHome} width='20px' height='20px' color='inherit' />,
+    icon: <Icon as={MdSpeed} width='20px' height='20px' color='inherit' />,
     component: RTL
   }
 ]

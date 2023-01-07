@@ -68,7 +68,7 @@ export default function ColumnsTable (props: TableProps) {
           fontWeight='700'
           lineHeight='100%'
         >
-          Complex Table
+          Últimas notificaciones
         </Text>
         <Menu />
       </Flex>

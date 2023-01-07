@@ -36,10 +36,10 @@ import MiniCalendar from 'components/calendar/MiniCalendar'
 import MiniStatistics from 'components/card/MiniStatistics'
 import IconBox from 'components/icons/IconBox'
 import {
-  MdAddTask,
+  MdPendingActions,
   MdAttachMoney,
   MdBarChart,
-  MdFileCopy
+  MdFileCopy,
 } from 'react-icons/md'
 import CheckTable from 'views/admin/default/components/CheckTable'
 import ComplexTable from 'views/admin/default/components/ComplexTable'
@@ -58,8 +58,7 @@ import tableDataComplex from 'views/admin/default/variables/tableDataComplex.jso
 import { isWindowAvailable } from 'utils/navigation'
 import AdminLayout from 'layouts/admin'
 import { Image } from 'components/image/Image'
-import Usa from 'img/dashboards/usa.png'
-
+import Banner from 'views/admin/marketplace/components/Banner'
 export default function UserReports () {
   // Chakra Color Mode
 
@@ -70,10 +69,13 @@ export default function UserReports () {
     <AdminLayout>
       <Box pt={{ base: '130px', md: '80px', xl: '80px' }}>
         <>
+        <Banner />
           <SimpleGrid
-            columns={{ base: 1, md: 2, lg: 3, '2xl': 6 }}
-            gap='20px'
+            columns={{ base: 1, md: 2, lg: 4, '2xl': 4 }}
+            gap='10px'
             mb='20px'
+            mt='20px'
+
           >
             <MiniStatistics
               startContent={
@@ -91,8 +93,8 @@ export default function UserReports () {
                   }
                 />
               }
-              name='Earnings'
-              value='$350.4'
+              name='Deuda'
+              value='$101.4'
             />
             <MiniStatistics
               startContent={
@@ -110,45 +112,21 @@ export default function UserReports () {
                   }
                 />
               }
-              name='Spend this month'
-              value='$642.39'
+              name='Crédito'
+              value='$5.39'
             />
-            <MiniStatistics growth='+23%' name='Sales' value='$574.34' />
-            <MiniStatistics
-              endContent={
-                <Flex me='-16px' mt='10px'>
-                  <FormLabel htmlFor='balance'>
-                    <Box boxSize={'12'}>
-                      <Image src={Usa} alt='' w={'100%'} h={'100%'} />
-                    </Box>
-                  </FormLabel>
-                  <Select
-                    id='balance'
-                    variant='mini'
-                    mt='5px'
-                    me='0px'
-                    defaultValue='usd'
-                  >
-                    <option value='usd'>USD</option>
-                    <option value='eur'>EUR</option>
-                    <option value='gba'>GBA</option>
-                  </Select>
-                </Flex>
-              }
-              name='Your balance'
-              value='$1,000'
-            />
+   
             <MiniStatistics
               startContent={
                 <IconBox
                   w='56px'
                   h='56px'
                   bg='linear-gradient(90deg, #4481EB 0%, #04BEFE 100%)'
-                  icon={<Icon w='28px' h='28px' as={MdAddTask} color='white' />}
+                  icon={<Icon w='28px' h='28px' as={MdPendingActions} color='white' />}
                 />
               }
-              name='New Tasks'
-              value='154'
+              name='Notas de cobro pendientes'
+              value='2'
             />
             <MiniStatistics
               startContent={
@@ -166,34 +144,21 @@ export default function UserReports () {
                   }
                 />
               }
-              name='Total Projects'
-              value='2935'
+              name='N° de contratos'
+              value='2'
             />
           </SimpleGrid>
 
-          <SimpleGrid columns={{ base: 1, md: 2, xl: 2 }} gap='20px' mb='20px'>
-            <TotalSpent />
-            <WeeklyRevenue />
-          </SimpleGrid>
-          <SimpleGrid columns={{ base: 1, md: 1, xl: 2 }} gap='20px' mb='20px'>
-            <CheckTable
-              columnsData={columnsDataCheck}
-              tableData={(tableDataCheck as unknown) as TableData[]}
-            />
-            <SimpleGrid columns={{ base: 1, md: 2, xl: 2 }} gap='20px'>
-              <DailyTraffic />
-              <PieCard />
-            </SimpleGrid>
-          </SimpleGrid>
+
           <SimpleGrid columns={{ base: 1, md: 1, xl: 2 }} gap='20px' mb='20px'>
             <ComplexTable
               columnsData={columnsDataComplex}
               tableData={(tableDataComplex as unknown) as TableData[]}
             />
-            <SimpleGrid columns={{ base: 1, md: 2, xl: 2 }} gap='20px'>
-              <Tasks />
-              <MiniCalendar h='100%' minW='100%' selectRange={false} />
-            </SimpleGrid>
+            <CheckTable
+              columnsData={columnsDataCheck}
+              tableData={(tableDataCheck as unknown) as TableData[]}
+            />
           </SimpleGrid>
         </>
       </Box>
