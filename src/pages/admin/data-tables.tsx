@@ -1,48 +1,145 @@
-import { Box, SimpleGrid } from '@chakra-ui/react'
-import DevelopmentTable from 'views/admin/dataTables/components/DevelopmentTable'
-import CheckTable from 'views/admin/dataTables/components/CheckTable'
-import ColumnsTable from 'views/admin/dataTables/components/ColumnsTable'
-import ComplexTable from 'views/admin/dataTables/components/ComplexTable'
 import {
-  columnsDataDevelopment,
+  Avatar,
+  Box,
+  Flex,
+  FormLabel,
+  Icon,
+  Select,
+  SimpleGrid,
+  useColorModeValue
+} from '@chakra-ui/react'
+// Assets
+// Custom components
+import MiniCalendar from 'components/calendar/MiniCalendar'
+import MiniStatistics from 'components/card/MiniStatistics'
+import IconBox from 'components/icons/IconBox'
+import {
+  MdAddTask,
+  MdAttachMoney,
+  MdBarChart,
+  MdFileCopy
+} from 'react-icons/md'
+import CheckTable from 'views/admin/default/components/CheckTable'
+import ComplexTable from 'views/admin/default/components/ComplexTable'
+import DailyTraffic from 'views/admin/default/components/DailyTraffic'
+import PieCard from 'views/admin/default/components/PieCard'
+import Tasks from 'views/admin/default/components/Tasks'
+import TotalSpent from 'views/admin/default/components/TotalSpent'
+import WeeklyRevenue from 'views/admin/default/components/WeeklyRevenue'
+import {
   columnsDataCheck,
-  columnsDataColumns,
-  columnsDataComplex
-} from 'views/admin/dataTables/variables/columnsData'
-import tableDataDevelopment from 'views/admin/dataTables/variables/tableDataDevelopment.json'
-import tableDataCheck from 'views/admin/dataTables/variables/tableDataCheck.json'
-import tableDataColumns from 'views/admin/dataTables/variables/tableDataColumns.json'
-import tableDataComplex from 'views/admin/dataTables/variables/tableDataComplex.json'
-import React from 'react'
+  columnsDataComplex,
+  TableData
+} from 'views/admin/default/variables/columnsData'
+import tableDataCheck from 'views/admin/default/variables/tableDataCheck.json'
+import tableDataComplex from 'views/admin/default/variables/tableDataComplex.json'
+import { isWindowAvailable } from 'utils/navigation'
 import AdminLayout from 'layouts/admin'
-import { TableData } from 'views/admin/default/variables/columnsData'
+import { Image } from 'components/image/Image'
+import Usa from 'img/dashboards/usa.png'
 
-export default function DataTables () {
+export default function UserReports () {
+  // Chakra Color Mode
+
+  const brandColor = useColorModeValue('brand.500', 'white')
+  const boxBg = useColorModeValue('secondaryGray.300', 'whiteAlpha.100')
+
   return (
     <AdminLayout>
       <Box pt={{ base: '130px', md: '80px', xl: '80px' }}>
-        <SimpleGrid
-          mb='20px'
-          columns={{ sm: 1, md: 2 }}
-          spacing={{ base: '20px', xl: '20px' }}
-        >
-          <DevelopmentTable
-            columnsData={columnsDataDevelopment}
-            tableData={(tableDataDevelopment as unknown) as TableData[]}
-          />
-          <CheckTable
-            columnsData={columnsDataCheck}
-            tableData={(tableDataCheck as unknown) as TableData[]}
-          />
-          <ColumnsTable
-            columnsData={columnsDataColumns}
-            tableData={(tableDataColumns as unknown) as TableData[]}
-          />
-          <ComplexTable
-            columnsData={columnsDataComplex}
-            tableData={(tableDataComplex as unknown) as TableData[]}
-          />
-        </SimpleGrid>
+        <>
+          <SimpleGrid
+            columns={{ base: 1, md: 2, lg: 3, '2xl': 5 }}
+            gap='20px'
+            mb='20px'
+          >
+            <MiniStatistics
+              startContent={
+                <IconBox
+                  w='56px'
+                  h='56px'
+                  bg={boxBg}
+                  icon={
+                    <Icon
+                      w='32px'
+                      h='32px'
+                      as={MdBarChart}
+                      color={brandColor}
+                    />
+                  }
+                />
+              }
+              name='Capacidad del plan  '
+              value='1024 GB'
+            />
+            <MiniStatistics
+              startContent={
+                <IconBox
+                  w='56px'
+                  h='56px'
+                  bg={boxBg}
+                  icon={
+                    <Icon
+                      w='32px'
+                      h='32px'
+                      as={MdAttachMoney}
+                      color={brandColor}
+                    />
+                  }
+                />
+              }
+              name='Gastado este mes'
+              value='642.39 GB'
+            />
+            <MiniStatistics growth='+23%' name='Disponbile' value='381.61 GB' />
+            <MiniStatistics
+              startContent={
+                <IconBox
+                  w='56px'
+                  h='56px'
+                  bg='linear-gradient(90deg, #4481EB 0%, #04BEFE 100%)'
+                  icon={<Icon w='28px' h='28px' as={MdAddTask} color='white' />}
+                />
+              }
+              name='Velocidad bajada'
+              value='120MB'
+            />
+            <MiniStatistics
+              startContent={
+                <IconBox
+                  w='56px'
+                  h='56px'
+                  bg={boxBg}
+                  icon={
+                    <Icon
+                      w='32px'
+                      h='32px'
+                      as={MdFileCopy}
+                      color={brandColor}
+                    />
+                  }
+                />
+              }
+              name='Velocidad subida'
+              value='20MB'
+            />
+          </SimpleGrid>
+
+          <SimpleGrid columns={{ base: 1, md: 2, xl: 2 }} gap='20px' mb='20px'>
+            <TotalSpent />
+            <WeeklyRevenue />
+          </SimpleGrid>
+          <SimpleGrid columns={{ base: 1, md: 1, xl: 2 }} gap='20px' mb='20px'>
+            <CheckTable
+              columnsData={columnsDataCheck}
+              tableData={(tableDataCheck as unknown) as TableData[]}
+            />
+            <SimpleGrid columns={{ base: 1, md: 2, xl: 2 }} gap='20px'>
+              <DailyTraffic />
+              <PieCard />
+            </SimpleGrid>
+          </SimpleGrid>
+        </>
       </Box>
     </AdminLayout>
   )

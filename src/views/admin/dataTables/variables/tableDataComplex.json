@@ -1,25 +1,25 @@
 [
   {
-    "name":"Marketplace",
-    "status": "Approved",
+    "notaCobro":12305,
+    "status": "Pagada",
     "date": "24.Jan.2021",
     "progress": 75.5  
   },
   {
-    "name":"Marketplace",
-    "status": "Disable",
+    "notaCobro": 14651,
+    "status": "Cancelada",
     "date": "30.Dec.2021",
     "progress": 25.5  
   },
   {
-    "name":"Marketplace",
-    "status": "Error",
+    "notaCobro": 46512,
+    "status": "No pagada",
     "date": "20.May.2021",
     "progress": 90  
   },
   {
-    "name":"Marketplace",
-    "status": "Approved",
+    "notaCobro": 15645,
+    "status": "Pagada",
     "date": "12.Jul.2021",
     "progress": 50.5  
   }

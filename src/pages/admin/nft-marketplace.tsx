@@ -1,330 +1,618 @@
-/*!
-  _   _  ___  ____  ___ ________  _   _   _   _ ___   
- | | | |/ _ \|  _ \|_ _|__  / _ \| \ | | | | | |_ _| 
- | |_| | | | | |_) || |  / / | | |  \| | | | | || | 
- |  _  | |_| |  _ < | | / /| |_| | |\  | | |_| || |
- |_| |_|\___/|_| \_\___/____\___/|_| \_|  \___/|___|
-                                                                                                                                                                                                                                                                                                                                       
-=========================================================
-* Horizon UI - v1.1.0
-=========================================================
-
-* Product Page: https://www.horizon-ui.com/
-* Copyright 2022 Horizon UI (https://www.horizon-ui.com/)
-
-* Designed and Coded by Simmmple
-
-=========================================================
-
-* The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-
-*/
-
-import React from 'react'
-
-// Chakra imports
+import { Box, SimpleGrid, Flex,useColorModeValue,Text } from '@chakra-ui/react'
+import DevelopmentTable from 'views/admin/dataTables/components/DevelopmentTable'
+import CheckTable from 'views/admin/dataTables/components/CheckTable'
+import ColumnsTable from 'views/admin/dataTables/components/ColumnsTable'
+import ComplexTable from 'views/admin/dataTables/components/ComplexTable'
 import {
-  Box,
-  Button,
-  Flex,
-  Grid,
-  Text,
-  useColorModeValue,
-  SimpleGrid,
-  Link
-} from '@chakra-ui/react'
-
-// Custom components
-import Banner from 'views/admin/marketplace/components/Banner'
-import TableTopCreators from 'views/admin/marketplace/components/TableTopCreators'
-import HistoryItem from 'views/admin/marketplace/components/HistoryItem'
-import NFT from 'components/card/NFT'
-import Card from 'components/card/Card'
-
-// Assets
-import Nft1 from 'img/nfts/Nft1.png'
-import Nft2 from 'img/nfts/Nft2.png'
-import Nft3 from 'img/nfts/Nft3.png'
-import Nft4 from 'img/nfts/Nft4.png'
-import Nft5 from 'img/nfts/Nft5.png'
-import Nft6 from 'img/nfts/Nft6.png'
-import Avatar1 from 'img/avatars/avatar1.png'
-import Avatar2 from 'img/avatars/avatar2.png'
-import Avatar3 from 'img/avatars/avatar3.png'
-import Avatar4 from 'img/avatars/avatar4.png'
-import tableDataTopCreators from 'views/admin/marketplace/variables/tableDataTopCreators.json'
-import { tableColumnsTopCreators } from 'views/admin/marketplace/variables/tableColumnsTopCreators'
+  columnsDataDevelopment,
+  columnsDataCheck,
+  columnsDataColumns,
+  columnsDataComplex
+} from 'views/admin/dataTables/variables/columnsData'
+import tableDataDevelopment from 'views/admin/dataTables/variables/tableDataDevelopment.json'
+import tableDataCheck from 'views/admin/dataTables/variables/tableDataCheck.json'
+import tableDataColumns from 'views/admin/dataTables/variables/tableDataColumns.json'
+import tableDataComplex from 'views/admin/dataTables/variables/tableDataComplex.json'
+import React from 'react'
 import AdminLayout from 'layouts/admin'
 import { TableData } from 'views/admin/default/variables/columnsData'
-import NextLink from 'next/link'
+import Card from 'components/card/Card'
+import Menu from 'components/menu/MainMenu'
+////////////////////////////////////////////
+import { useEffect, useState } from "react";
+import {
+    FormControl,
+    FormLabel,
+    Heading,
+    Input,
+    InputGroup,
+    InputLeftElement,
+    Stack,
+    Textarea,
+    VStack,
+    FormErrorMessage,
+    FormHelperText,
+    Select,
+    Spacer,
+    Button,
+    useToast
+} from "@chakra-ui/react";
+import { BsPerson, BsTelephone } from "react-icons/bs";
+// import ReactCanvasConfetti from "react-canvas-confetti";
+import { Form, Formik, Field } from "formik";
+import * as Yup from "yup";
+import { useRouter } from "next/router";
 
-export default function NftMarketplace () {
-  // Chakra Color Mode
+const formasDePago = [
+    //quizas es mejor llave value en origen y destino
+    {
+        metodo: "Transferencia Bancaria Nacional",
+        bancoOrigen: [
+            "Banesco",
+            "Provincial",
+            "Venezuela",
+            "Mercantil",
+            "BanCaribe",
+            "100% Banco",
+            "Banco del Tesoro",
+            "Banco Nacional de Credito",
+            "Banplus",
+            "Bicentenario",
+            "BFC",
+            "BOD",
+            "Caroni",
+            "Exterior",
+            "Sofitasa",
+            "Venezolano de Credito",
+            "Otro Nacional",
+        ],
+        bancoDestino: [
+            "Banesco",
+            "Provincial",
+            "Banco Nacional de Credito (divisas)",
+        ],
+    },
+    {
+        metodo: "Transferencia Bancaria Internacional",
+        bancoOrigen: ["Bank Of America"],
+        bancoDestino: ["Bank Of America"],
+    },
+    {
+        metodo: "Zelle",
+        bancoOrigen: ["Zelle"],
+        bancoDestino: ["Zelle"],
+    },
+    {
+        metodo: "Binance USDT",
+        bancoOrigen: ["Binance"],
+        bancoDestino: ["Binance"],
+    },
+    {
+        metodo: "PayPal",
+        bancoOrigen: ["PayPal"],
+        bancoDestino: ["PayPal"],
+    },
+    {
+        metodo: "Pago movil",
+        bancoOrigen: [
+            "Banesco",
+            "Provincial",
+            "Venezuela",
+            "Mercantil",
+            "BanCaribe",
+            "100% Banco",
+            "Banco del Tesoro",
+            "Banco Nacional de Credito",
+            "Banplus",
+            "Bicentenario",
+            "BFC",
+            "BOD",
+            "Caroni",
+            "Exterior",
+            "Sofitasa",
+            "Venezolano de Credito",
+            "Otro Nacional",
+        ],
+        bancoDestino: ["Banesco", "Provincial"],
+    },
+];
+
+const ContactSchema = Yup.object().shape({
+    email: Yup.string()
+        .email("Debe colocar un correo válido")
+        .required("El correo es requerido"),
+    telefono: Yup.string()
+        .matches(/^(\+?\d{1,3})?\s?[0-9-]{10,12}$/, {
+            message: "Teléfono inválido",
+            excludeEmptyString: false,
+        })
+        .max(15, "El teléfono es incorrecto"),
+    formaPago: Yup.string().required("La forma de pago es requerida"),
+    bancoOrigen: Yup.string().required("El banco de origen es requerido"),
+    bancoDestino: Yup.string().required("El banco de destino es requerido"),
+    referencia: Yup.string().required("La referencia es requerida"),
+    monto: Yup.number()
+        .moreThan(0.0, "El monto debe ser superior a 0.00")
+        .required("El monto es requerido"),
+    fechaPago: Yup.string().required("La fecha del pago es requerida"),
+    ciRIF: Yup.string()
+        .min(5, "Debe tener más de 5 caracteres")
+        .max(50, "Debe tener menos de 50 caracteres")
+        .required("La cédula o RIF es requerido"),
+    observaciones: Yup.string().max(
+        255,
+        "El mensaje no puede superar los 255 caracteres"
+    ),
+});
+
+export default function DataTables () {
+  const id = 1400
+  const [data, setData] = useState([]),
+  [formaPago, setformaPago] = useState(""),
+  [bancoOrigen, setBancoOrigen] = useState([]),
+  [bancoDestino, setBancoDestino] = useState([]);
+
+  useEffect(() => {
+    // captura de datos de la db o local
+    setData(formasDePago);
+  }, []);
+
+  useEffect(() => {
+    data.forEach((data) => {
+        if (data.metodo === formaPago) {
+            setBancoOrigen(data.bancoOrigen);
+            setBancoDestino(data.bancoDestino);
+        }
+    });
+  }, [formaPago, data]);
+  const router = useRouter();
+  const toast = useToast();
+
+
+
+  // const id = router.query.id;
+  let [report, setReport] = useState({});
+
+  async function onSubmitForm(e: any) {
+      e.preventDefault();
+
+      report = {
+          ...report,
+          id_contrato: Number(id),
+      };
+
+      console.log(report);
+
+
+
+  }
   const textColor = useColorModeValue('secondaryGray.900', 'white')
-  const textColorBrand = useColorModeValue('brand.500', 'white')
+  const borderColor = useColorModeValue('gray.200', 'whiteAlpha.100')
   return (
     <AdminLayout>
-      <Box pt={{ base: '180px', md: '80px', xl: '80px' }}>
-        {/* Main Fields */}
-        <Grid
+      <Box pt={{ base: '130px', md: '80px', xl: '80px' }}>
+        <SimpleGrid
           mb='20px'
-          gridTemplateColumns={{ xl: 'repeat(3, 1fr)', '2xl': '1fr 0.46fr' }}
-          gap={{ base: '20px', xl: '20px' }}
-          display={{ base: 'block', xl: 'grid' }}
+          columns={{ sm: 1, md: 2 }}
+          spacing={{ base: '20px', xl: '20px' }}
         >
-          <Flex
-            flexDirection='column'
-            gridArea={{ xl: '1 / 1 / 2 / 3', '2xl': '1 / 1 / 2 / 2' }}
-          >
-            <Banner />
-            <Flex direction='column'>
-              <Flex
-                mt='45px'
-                mb='20px'
-                justifyContent='space-between'
-                direction={{ base: 'column', md: 'row' }}
-                align={{ base: 'start', md: 'center' }}
-              >
+  
+            <Card
+              flexDirection='column'
+              w='100%'
+              px='10px'
+              overflowX={{ sm: 'hidden', lg: 'hidden' }}
+            >
+              <Flex px='25px' justify='space-between' mb='20px' align='center'>
                 <Text
                   color={textColor}
-                  fontSize='2xl'
-                  ms='24px'
+                  fontSize='22px'
                   fontWeight='700'
+                  lineHeight='100%'
                 >
-                  Trending NFTs
+                  Reporte de pago
                 </Text>
-                <Flex
-                  align='center'
-                  me='20px'
-                  ms={{ base: '24px', md: '0px' }}
-                  mt={{ base: '20px', md: '0px' }}
-                >
-                  <NextLink href='#art' passHref>
-                    <Link
-                      color={textColorBrand}
-                      fontWeight='500'
-                      me={{ base: '34px', md: '44px' }}
-                    >
-                      Art
-                    </Link>
-                  </NextLink>
-                  <NextLink href='#music' passHref>
-                    <Link
-                      color={textColorBrand}
-                      fontWeight='500'
-                      me={{ base: '34px', md: '44px' }}
-                    >
-                      Music
-                    </Link>
-                  </NextLink>
-                  <NextLink href='#collectibles' passHref>
-                    <Link
-                      color={textColorBrand}
-                      fontWeight='500'
-                      me={{ base: '34px', md: '44px' }}
-                    >
-                      Collectibles
-                    </Link>
-                  </NextLink>
-                  <NextLink href='#sports' passHref>
-                    <Link color={textColorBrand} fontWeight='500'>
-                      Sports
-                    </Link>
-                  </NextLink>
-                </Flex>
+                <Menu />
               </Flex>
-              <SimpleGrid columns={{ base: 1, md: 3 }} gap='20px'>
-                <NFT
-                  name='Abstract Colors'
-                  author='By Esthera Jackson'
-                  bidders={[
-                    Avatar1,
-                    Avatar2,
-                    Avatar3,
-                    Avatar4,
-                    Avatar1,
-                    Avatar1,
-                    Avatar1,
-                    Avatar1
-                  ]}
-                  image={Nft1}
-                  currentbid='0.91 ETH'
-                  download='#'
-                />
-                <NFT
-                  name='ETH AI Brain'
-                  author='By Nick Wilson'
-                  bidders={[
-                    Avatar1,
-                    Avatar2,
-                    Avatar3,
-                    Avatar4,
-                    Avatar1,
-                    Avatar1,
-                    Avatar1,
-                    Avatar1
-                  ]}
-                  image={Nft2}
-                  currentbid='0.91 ETH'
-                  download='#'
-                />
-                <NFT
-                  name='Mesh Gradients '
-                  author='By Will Smith'
-                  bidders={[
-                    Avatar1,
-                    Avatar2,
-                    Avatar3,
-                    Avatar4,
-                    Avatar1,
-                    Avatar1,
-                    Avatar1,
-                    Avatar1
-                  ]}
-                  image={Nft3}
-                  currentbid='0.91 ETH'
-                  download='#'
-                />
-              </SimpleGrid>
-              <Text
-                mt='45px'
-                mb='36px'
-                color={textColor}
-                fontSize='2xl'
-                ms='24px'
-                fontWeight='700'
-              >
-                Recently Added
-              </Text>
-              <SimpleGrid
-                columns={{ base: 1, md: 3 }}
-                gap='20px'
-                mb={{ base: '20px', xl: '0px' }}
-              >
-                <NFT
-                  name='Swipe Circles'
-                  author='By Peter Will'
-                  bidders={[
-                    Avatar1,
-                    Avatar2,
-                    Avatar3,
-                    Avatar4,
-                    Avatar1,
-                    Avatar1,
-                    Avatar1,
-                    Avatar1
-                  ]}
-                  image={Nft4}
-                  currentbid='0.91 ETH'
-                  download='#'
-                />
-                <NFT
-                  name='Colorful Heaven'
-                  author='By Mark Benjamin'
-                  bidders={[
-                    Avatar1,
-                    Avatar2,
-                    Avatar3,
-                    Avatar4,
-                    Avatar1,
-                    Avatar1,
-                    Avatar1,
-                    Avatar1
-                  ]}
-                  image={Nft5}
-                  currentbid='0.91 ETH'
-                  download='#'
-                />
-                <NFT
-                  name='3D Cubes Art'
-                  author='By Manny Gates'
-                  bidders={[
-                    Avatar1,
-                    Avatar2,
-                    Avatar3,
-                    Avatar4,
-                    Avatar1,
-                    Avatar1,
-                    Avatar1,
-                    Avatar1
-                  ]}
-                  image={Nft6}
-                  currentbid='0.91 ETH'
-                  download='#'
-                />
-              </SimpleGrid>
-            </Flex>
-          </Flex>
-          <Flex
-            flexDirection='column'
-            gridArea={{ xl: '1 / 3 / 2 / 4', '2xl': '1 / 2 / 2 / 3' }}
-          >
-            <Card px='0px' mb='20px'>
-              <TableTopCreators
-                tableData={(tableDataTopCreators as unknown) as TableData[]}
-                columnsData={tableColumnsTopCreators}
-              />
-            </Card>
-            <Card p='0px'>
-              <Flex
-                align={{ sm: 'flex-start', lg: 'center' }}
-                justify='space-between'
-                w='100%'
-                px='22px'
-                py='18px'
-              >
-                <Text color={textColor} fontSize='xl' fontWeight='600'>
-                  History
-                </Text>
-                <Button variant='action'>See all</Button>
+              <Flex direction={{ base: 'column' }} justify='center'>
+
+              <Box mb={{ base: '20px', '2xl': '20px' }} position='relative'>
+                      <VStack>
+                          <Stack
+                              spacing={{ base: 4, md: 8, lg: 20 }}
+                              direction={{ base: "column", md: "row" }}
+                          >
+                              <Formik
+                                  initialValues={{
+                                      contrato: "",
+                                      email: "",
+                                      telefono: "",
+                                      formaPago: "",
+                                      bancoOrigen: "",
+                                      bancoDestino: "",
+                                      referencia: "",
+                                      monto: 0.0,
+                                      fechaPago: "",
+                                      ciRIF: "",
+                                      observaciones: "",
+                                  }}
+                                  validationSchema={ContactSchema}
+                                  onSubmit={(values, { setSubmitting }) => {
+                                      setTimeout(() => {
+                                          alert(JSON.stringify(values, null, 2));
+                                          setSubmitting(false);
+                                      }, 1000);
+                                  }}
+                              >
+                                  {({ isSubmitting }) => (
+                                      <Form
+                                          onSubmit={onSubmitForm}
+                                      >
+                                          <VStack spacing={4} align={"left"}>
+                                              <Stack
+                                                  direction={["column", "column", "row"]}
+                                                  spacing={4}
+                                                  maxWidth={"550px"}
+                                              >
+                                                  <Field name="contrato" type="number">
+                                                      {({ field, form }: {field: any,form: any}) => (
+                                                          <FormControl
+                                                              id="id_contrato"
+                                                              // onChange={(e) => setReport({ ...report, id_contrato: Number(e.target.value) })}
+                                                              isReadOnly
+                                                              isRequired
+                                                              isInvalid={
+                                                                  form.errors.contrato && form.touched.contrato
+                                                              }
+                                                          >
+                                                              <FormLabel color={textColor}>Contrato</FormLabel>
+                                                              <InputGroup borderColor="#E0E1E7">
+                                                                  <InputLeftElement pointerEvents="none">
+                                                                      <BsPerson color="gray.800" />
+                                                                  </InputLeftElement>
+                                                                  <Input
+                                                                      {...field}
+                                                                      type="text"
+                                                                      size="md"
+                                                                      color={textColor}
+                                                                      value={String(id)}
+                                                                      variant="filled"
+                                                                  />
+                                                              </InputGroup>
+                                                              <FormErrorMessage>
+                                                                  {form.errors.contrato}
+                                                              </FormErrorMessage>
+                                                          </FormControl>
+                                                      )}
+                                                  </Field>
+                                                  <Spacer />
+                                                  <Field name="ciRIF" type="text">
+                                                      {({ field, form }: {field: any,form: any}) => (
+                                                          <FormControl
+                                                              id="cedula_titular"
+                                                    
+                                                              isRequired
+                                                              isInvalid={
+                                                                  form.errors.ciRIF && form.touched.ciRIF
+                                                              }
+                                                          >
+                                                              <FormLabel color={textColor}>Cédula/RIF</FormLabel>
+                                                              <InputGroup borderColor="#E0E1E7">
+                                                                  <InputLeftElement pointerEvents="none">
+                                                                      <BsTelephone color="gray.800" />
+                                                                  </InputLeftElement>
+                                                                  <Input color={textColor} {...field} type="text" size="md" />
+                                                              </InputGroup>
+                                                              <FormHelperText>
+                                                                  Introduzca su CI/RIF del titular de la Cuenta
+                                                                  Bancaria
+                                                              </FormHelperText>
+                                                              <FormErrorMessage>
+                                                                  {form.errors.ciRIF}
+                                                              </FormErrorMessage>
+                                                          </FormControl>
+                                                      )}
+                                                  </Field>
+
+                                              </Stack>
+                                              <Stack
+                                                  direction={["column", "column", "row"]}
+                                                  spacing={4}
+                                                  maxWidth={"550px"}
+                                              >
+
+                                                  <Field name="formaPago" type="text">
+                                                      {({ field, form }: {field: any,form: any}) => (
+                                                          <FormControl
+                                                              id="forma_pago"
+                                                    
+                                                              isRequired
+                                                              isInvalid={
+                                                                  form.errors.formaPago &&
+                                                                  form.touched.formaPago
+                                                              }
+                                                          >
+                                                              <FormLabel color={textColor}>Forma de pago</FormLabel>
+                                                              <InputGroup borderColor="#E0E1E7">
+                                                                  <Select
+                                                                      {...field}
+                                                                      borderColor="#E0E1E7"
+                                                                      variant="outline"
+                                                                      placeholder="Seleccione"
+                                                                      color={textColor}
+                                                                      size="md"
+                                                                  >
+                                                                      {data.map((data) => {
+                                                                          return (
+                                                                              <option
+                                                                                  key={data.metodo}
+                                                                                  value={data.metodo}
+                                                                              >
+                                                                                  {data.metodo}
+                                                                              </option>
+                                                                          );
+                                                                      })}
+                                                                  </Select>
+                                                              </InputGroup>
+                                                              <FormHelperText>
+                                                                  Introduzca su forma de pago
+                                                              </FormHelperText>
+                                                              <FormErrorMessage>
+                                                                  {form.errors.formaPago}
+                                                              </FormErrorMessage>
+                                                          </FormControl>
+                                                      )}
+                                                  </Field>
+                                              </Stack>
+                                              <Stack
+                                                  direction={["column", "column", "row"]}
+                                                  spacing={4}
+                                                  maxWidth={"550px"}
+                                              >
+                                                  <Field name="bancoOrigen" type="text">
+                                                      {({ field, form }: {field: any,form: any}) => (
+                                                          <FormControl
+                                                              id="origen"
+                                                    
+                                                              isRequired
+                                                              isInvalid={
+                                                                  form.errors.bancoOrigen &&
+                                                                  form.touched.bancoOrigen
+                                                              }
+                                                          >
+                                                              <FormLabel color={textColor}>Banco de origen</FormLabel>
+                                                              <InputGroup borderColor="#E0E1E7">
+                                                                  <Select
+                                                                      {...field}
+                                                                      borderColor="#E0E1E7"
+                                                                      variant="outline"
+                                                                      placeholder="Seleccione"
+                                                                      size="md"
+                                                                      color={textColor}
+                                                                  >
+                                                                      {bancoOrigen.length > 0 &&
+                                                                          bancoOrigen.map((nombre, key) => {
+                                                                              return (
+                                                                                  <option key={key} value={nombre}>
+                                                                                      {nombre}
+                                                                                  </option>
+                                                                              );
+                                                                          })}
+                                                                  </Select>
+                                                              </InputGroup>
+                                                              <FormErrorMessage>
+                                                                  {form.errors.bancoOrigen}
+                                                              </FormErrorMessage>
+                                                          </FormControl>
+                                                      )}
+                                                  </Field>
+                                                  <Spacer />
+                                                  <Field name="bancoDestino" type="text">
+                                                      {({ field, form }: {field: any,form: any}) => (
+                                                          <FormControl
+                                                              id="destino"
+                                                    
+                                                              isRequired
+                                                              isInvalid={
+                                                                  form.errors.bancoDestino &&
+                                                                  form.touched.bancoDestino
+                                                              }
+                                                          >
+                                                              <FormLabel color={textColor}>Banco de destino</FormLabel>
+                                                              <InputGroup borderColor="#E0E1E7">
+                                                                  <Select
+                                                                      color={textColor}
+                                                                      {...field}
+                                                                      borderColor="#E0E1E7"
+                                                                      variant="outline"
+                                                                      placeholder="Seleccione"
+                                                                      size="md"
+                                                                  >
+                                                                      {bancoDestino.length > 0 &&
+                                                                          bancoDestino.map((nombre, key) => {
+                                                                              return (
+                                                                                  <option key={key} value={nombre}>
+                                                                                      {nombre}
+                                                                                  </option>
+                                                                              );
+                                                                          })}
+                                                                  </Select>
+                                                              </InputGroup>
+                                                              <FormErrorMessage>
+                                                                  {form.errors.bancoDestino}
+                                                              </FormErrorMessage>
+                                                          </FormControl>
+                                                      )}
+                                                  </Field>
+                                              </Stack>
+                                              <Stack
+                                                  direction={["column", "column", "row"]}
+                                                  spacing={4}
+                                                  maxWidth={"550px"}
+                                              >
+                                                  <Field name="referencia" type="text">
+                                                      {({ field, form }: {field: any,form: any}) => (
+                                                          <FormControl
+                                                              id="referencia"
+                                                      
+                                                              isRequired
+                                                              isInvalid={
+                                                                  form.errors.referencia &&
+                                                                  form.touched.referencia
+                                                              }
+                                                          >
+                                                              <FormLabel color={textColor}>Referencia</FormLabel>
+                                                              <InputGroup borderColor="#E0E1E7">
+                                                                  <InputLeftElement pointerEvents="none">
+                                                                      <BsTelephone color="gray.800" />
+                                                                  </InputLeftElement>
+                                                                  <Input color={textColor} {...field} type="text" size="md" />
+                                                              </InputGroup>
+                                                              <FormHelperText>
+                                                                  Introduzca la referencia de la operación
+                                                              </FormHelperText>
+                                                              <FormErrorMessage>
+                                                                  {form.errors.referencia}
+                                                              </FormErrorMessage>
+                                                          </FormControl>
+                                                      )}
+                                                  </Field>
+                                                  <Spacer />
+                                                  <Field name="monto" type="number">
+                                                      {({ field, form }: {field: any,form: any}) => (
+                                                          <FormControl
+                                                              id="monto"
+                                                        
+                                                              isRequired
+                                                              isInvalid={
+                                                                  form.errors.monto && form.touched.monto
+                                                              }
+                                                          >
+                                                              <FormLabel color={textColor}>Monto</FormLabel>
+                                                              <InputGroup borderColor="#E0E1E7">
+                                                                  {/* <NumberInput defaultValue={0} precision={2} step={0.01} borderColor="#E0E1E7">
+                                                                                  <NumberInputField {...field} />
+                                                                                  <NumberInputStepper>
+                                                                                      <NumberIncrementStepper />
+                                                                                      <NumberDecrementStepper />
+                                                                                  </NumberInputStepper>
+                                                                              </NumberInput> */}
+                                                                  <Input color={textColor} {...field} type="number" size="md" />
+                                                              </InputGroup>
+                                                              <FormHelperText>
+                                                                  Use punto para decimales
+                                                              </FormHelperText>
+                                                              <FormErrorMessage>
+                                                                  {form.errors.monto}
+                                                              </FormErrorMessage>
+                                                          </FormControl>
+                                                      )}
+                                                  </Field>
+                                              </Stack>
+                                              <Stack
+                                                  direction={["column", "column", "row"]}
+                                                  spacing={4}
+                                                  maxWidth={"550px"}
+                                              >
+                                                  <Field name="telefono" type="text">
+                                                      {({ field, form }: {field: any,form: any}) => (
+                                                          <FormControl
+                                                              id="telefono"
+                                                          
+                                                              isInvalid={
+                                                                  form.errors.telefono && form.touched.telefono
+                                                              }
+                                                          >
+                                                              <FormLabel color={textColor}>Teléfono</FormLabel>
+                                                              <InputGroup borderColor="#E0E1E7">
+                                                                  <InputLeftElement pointerEvents="none">
+                                                                      <BsTelephone color="gray.800" />
+                                                                  </InputLeftElement>
+                                                                  <Input color={textColor} {...field} type="text" size="md" />
+                                                              </InputGroup>
+                                                              <FormHelperText>
+                                                                  04121234567 ó +58 04121234567
+                                                              </FormHelperText>
+                                                              <FormErrorMessage>
+                                                                  {form.errors.telefono}
+                                                              </FormErrorMessage>
+                                                          </FormControl>
+                                                      )}
+                                                  </Field>
+                                                  <Spacer />
+                                                  <Field name="fechaPago" type="date">
+                                                      {({ field, form }: {field: any,form: any}) => (
+                                                          <FormControl
+                                                              id="fecha_pago"
+                                                      
+                                                              isInvalid={
+                                                                  form.errors.fechaPago &&
+                                                                  form.touched.fechaPago
+                                                              }
+                                                          >
+                                                              <FormLabel color={textColor}>Fecha de pago</FormLabel>
+                                                              <InputGroup borderColor="#E0E1E7">
+                                                                  <Input
+                                                                      color={textColor}
+                                                                      {...field}
+                                                                      type="date"
+                                                                      size="md"
+                                                                      maxWidth={"255px"}
+                                                                  />
+                                                              </InputGroup>
+                                                              <FormErrorMessage>
+                                                                  {form.errors.fechaPago}
+                                                              </FormErrorMessage>
+                                                          </FormControl>
+                                                      )}
+                                                  </Field>
+                                              </Stack>
+
+                                              <Field name="observaciones" type="text">
+                                                  {({ field, form }: {field: any,form: any}) => (
+                                                      <FormControl
+                                                          id="observaciones"
+                                                
+                                                          isInvalid={
+                                                              form.errors.observaciones &&
+                                                              form.touched.observaciones
+                                                          }
+                                                      >
+                                                          <FormLabel color={textColor}>Observaciones</FormLabel>
+                                                          <Textarea
+                                                              color={textColor}
+                                                              {...field}
+                                                              borderColor="gray.300"
+                                                              _hover={{
+                                                                  borderRadius: "gray.300",
+                                                              }}
+                                                          />
+                                                          <FormErrorMessage>
+                                                              {form.errors.observaciones}
+                                                          </FormErrorMessage>
+                                                      </FormControl>
+                                                  )}
+                                              </Field>
+
+                                              <FormControl id="button" float="right" >
+                                                  <Button type="submit" isLoading={isSubmitting} loadingText="Registrando...">Registrar</Button>
+                                              </FormControl>
+                                          </VStack>
+                                      </Form>
+                                  )}
+                              </Formik>
+                          </Stack>
+                      </VStack>
+              </Box>
               </Flex>
 
-              <HistoryItem
-                name='Colorful Heaven'
-                author='By Mark Benjamin'
-                date='30s ago'
-                image={Nft5}
-                price='0.91 ETH'
-              />
-              <HistoryItem
-                name='Abstract Colors'
-                author='By Esthera Jackson'
-                date='58s ago'
-                image={Nft1}
-                price='0.91 ETH'
-              />
-              <HistoryItem
-                name='ETH AI Brain'
-                author='By Nick Wilson'
-                date='1m ago'
-                image={Nft2}
-                price='0.91 ETH'
-              />
-              <HistoryItem
-                name='Swipe Circles'
-                author='By Peter Will'
-                date='1m ago'
-                image={Nft4}
-                price='0.91 ETH'
-              />
-              <HistoryItem
-                name='Mesh Gradients '
-                author='By Will Smith'
-                date='2m ago'
-                image={Nft3}
-                price='0.91 ETH'
-              />
-              <HistoryItem
-                name='3D Cubes Art'
-                author='By Manny Gates'
-                date='3m ago'
-                image={Nft6}
-                price='0.91 ETH'
-              />
             </Card>
-          </Flex>
-        </Grid>
-        {/* Delete Product */}
+            <ComplexTable
+              columnsData={columnsDataComplex}
+              tableData={(tableDataComplex as unknown) as TableData[]}
+            />
+
+        </SimpleGrid>
       </Box>
     </AdminLayout>
   )

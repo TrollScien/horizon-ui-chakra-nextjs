@@ -24,7 +24,7 @@ import Card from 'components/card/Card'
 import Menu from 'components/menu/MainMenu'
 
 // Assets
-import { MdCheckCircle, MdCancel, MdOutlineError } from 'react-icons/md'
+import { MdCheckCircle, MdCancel, MdOutlineError, MdAddCircle } from 'react-icons/md'
 import { TableProps } from 'views/admin/default/variables/columnsData'
 export default function ColumnsTable (props: TableProps) {
   const { columnsData, tableData } = props
@@ -68,7 +68,7 @@ export default function ColumnsTable (props: TableProps) {
           fontWeight='700'
           lineHeight='100%'
         >
-          Complex Table
+          Notas de cobro
         </Text>
         <Menu />
       </Flex>
@@ -103,13 +103,25 @@ export default function ColumnsTable (props: TableProps) {
               <Tr {...row.getRowProps()} key={index}>
                 {row.cells.map((cell, index) => {
                   let data
-                  if (cell.column.Header === 'NAME') {
+                  if (cell.column.Header === 'NOTA DE COBRO') {
                     data = (
                       <Text color={textColor} fontSize='sm' fontWeight='700'>
                         {cell.value}
                       </Text>
                     )
-                  } else if (cell.column.Header === 'STATUS') {
+                  }  else if (cell.column.Header === 'FECHA') {
+                    data = (
+                      <Text color={textColor} fontSize='sm' fontWeight='700'>
+                        {cell.value}
+                      </Text>
+                    )
+                  } else if (cell.column.Header === 'MONTO') {
+                    data = (
+                      <Text color={textColor} fontSize='sm' fontWeight='700'>
+                        {cell.value}
+                      </Text>
+                    )
+                  } else if (cell.column.Header === 'ESTADO') {
                     data = (
                       <Flex align='center'>
                         <Icon
@@ -117,20 +129,20 @@ export default function ColumnsTable (props: TableProps) {
                           h='24px'
                           me='5px'
                           color={
-                            cell.value === 'Approved'
+                            cell.value === 'Pagada'
                               ? 'green.500'
-                              : cell.value === 'Disable'
+                              : cell.value === 'Cancelada'
+                              ? 'gray.500'
+                              : cell.value === 'No pagada'
                               ? 'red.500'
-                              : cell.value === 'Error'
-                              ? 'orange.500'
                               : null
                           }
                           as={
-                            cell.value === 'Approved'
+                            cell.value === 'Pagada'
                               ? MdCheckCircle
-                              : cell.value === 'Disable'
+                              : cell.value === 'Cancelada'
                               ? MdCancel
-                              : cell.value === 'Error'
+                              : cell.value === 'No pagada'
                               ? MdOutlineError
                               : null
                           }
@@ -140,23 +152,19 @@ export default function ColumnsTable (props: TableProps) {
                         </Text>
                       </Flex>
                     )
-                  } else if (cell.column.Header === 'DATE') {
+                  } else if (cell.column.Header === 'DETALLES') {
                     data = (
-                      <Text color={textColor} fontSize='sm' fontWeight='700'>
-                        {cell.value}
-                      </Text>
-                    )
-                  } else if (cell.column.Header === 'PROGRESS') {
-                    data = (
-                      <Flex align='center'>
-                        <Progress
-                          variant='table'
-                          colorScheme='brandScheme'
-                          h='8px'
-                          w='108px'
-                          value={cell.value}
+                        <Icon
+                          w='18px'
+                          h='18px'
+                          me='5px'
+                          color={textColor}
+                          as={
+                            cell.value === 'detalles'
+                              ? MdAddCircle
+                              : MdAddCircle
+                          }
                         />
-                      </Flex>
                     )
                   }
                   return (

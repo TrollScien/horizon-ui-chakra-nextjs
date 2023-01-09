@@ -41,7 +41,7 @@ export default function TotalSpent(props: { [x: string]: any }) {
 				<Flex align='center' w='100%'>
 					<Button bg={boxBg} fontSize='sm' fontWeight='500' color={textColorSecondary} borderRadius='7px'>
 						<Icon as={MdOutlineCalendarToday} color={textColorSecondary} me='4px' />
-						This month
+						Este mes
 					</Button>
 					<Button
 						ms='auto'
@@ -62,12 +62,12 @@ export default function TotalSpent(props: { [x: string]: any }) {
 			</Flex>
 			<Flex w='100%' flexDirection={{ base: 'column', lg: 'row' }}>
 				<Flex flexDirection='column' me='20px' mt='28px'>
-					<Text color={textColor} fontSize='34px' textAlign='start' fontWeight='700' lineHeight='100%'>
-						$37.5K
+					<Text color={textColor} fontSize='32px' textAlign='start' fontWeight='700' lineHeight='100%'>
+					642.39 GB
 					</Text>
 					<Flex align='center' mb='20px'>
 						<Text color='secondaryGray.600' fontSize='sm' fontWeight='500' mt='4px' me='12px'>
-							Total Spent
+							Total gastado
 						</Text>
 						<Flex align='center'>
 							<Icon as={RiArrowUpSFill} color='green.500' me='2px' mt='2px' />

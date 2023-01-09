@@ -117,7 +117,7 @@ export default function ColumnsTable (props: TableProps) {
                           h='24px'
                           me='5px'
                           color={
-                            cell.value === 'Approved'
+                            cell.value === 'Finalizado'
                               ? 'green.500'
                               : cell.value === 'Disable'
                               ? 'red.500'
@@ -126,7 +126,7 @@ export default function ColumnsTable (props: TableProps) {
                               : null
                           }
                           as={
-                            cell.value === 'Approved'
+                            cell.value === 'Finalizado'
                               ? MdCheckCircle
                               : cell.value === 'Disable'
                               ? MdCancel
@@ -154,8 +154,8 @@ export default function ColumnsTable (props: TableProps) {
                           colorScheme='brandScheme'
                           h='8px'
                           w='108px'
-                          value={cell.value}
-                        />
+                          />
+                          {cell.value}
                       </Flex>
                     )
                   }

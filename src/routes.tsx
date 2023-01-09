@@ -1,7 +1,7 @@
 import { Icon } from '@chakra-ui/react'
 import {
   MdBarChart,
-  MdPaid,
+  MdOutlinePersonOutline,
   MdHome,
   MdHeadsetMic,
   MdPayment,
@@ -28,7 +28,7 @@ const routes: IRoute[] = [
     component: MainDashboard
   },
   {
-    name: 'Reportar pago',
+    name: 'Pagos',
     layout: '/admin',
     path: '/nft-marketplace',
     icon: (
@@ -43,17 +43,17 @@ const routes: IRoute[] = [
     secondary: true
   },
   {
-    name: 'Consulta de saldo',
-    layout: '/admin',
-    icon: <Icon as={MdPaid} width='20px' height='20px' color='inherit' />,
-    path: '/data-tables',
-    component: DataTables
-  },
-  {
     name: 'Uso de datos',
     layout: '/admin',
-    path: '/profile',
+    path: '/data-tables',
     icon: <Icon as={MdBarChart} width='20px' height='20px' color='inherit' />,
+    component: Profile
+  },
+  {
+    name: 'Perfil',
+    layout: '/admin',
+    path: '/profile',
+    icon: <Icon as={MdOutlinePersonOutline} width='20px' height='20px' color='inherit' />,
     component: Profile
   },
   {

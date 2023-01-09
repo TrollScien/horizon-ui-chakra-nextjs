@@ -31,6 +31,7 @@ export default function Banner () {
         }}
         fontWeight='700'
         lineHeight={{ base: '32px', md: '42px' }}
+        opacity={0}
       >
         Discover, collect, and sell extraordinary NFTs
       </Text>
@@ -48,6 +49,7 @@ export default function Banner () {
         fontWeight='500'
         mb='40px'
         lineHeight='28px'
+        opacity={0}
       >
         Enter in this creative world. Discover now the latest NFTs or start
         creating your own!
@@ -64,11 +66,12 @@ export default function Banner () {
           py='20px'
           px='27'
           me='38px'
+          opacity={0}
         >
           Discover now
         </Button>
         <Link>
-          <Text color='white' fontSize='sm' fontWeight='500'>
+          <Text color='white' fontSize='sm' fontWeight='500' opacity={0}>
             Watch video
           </Text>
         </Link>

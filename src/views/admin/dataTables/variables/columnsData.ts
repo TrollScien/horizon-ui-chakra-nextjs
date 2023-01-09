@@ -64,19 +64,23 @@ export const columnsDataColumns: Columns = [
 
 export const columnsDataComplex: Columns = [
   {
-    Header: "NAME",
-    accessor: "name",
+    Header: "NOTA DE COBRO",
+    accessor: "notaCobro",
   },
   {
-    Header: "STATUS",
-    accessor: "status",
-  },
-  {
-    Header: "DATE",
+    Header: "FECHA",
     accessor: "date",
   },
   {
-    Header: "PROGRESS",
+    Header: "MONTO",
     accessor: "progress",
+  },
+  {
+    Header: "ESTADO",
+    accessor: "status",
+  },
+  {
+    Header: "DETALLES",
+    accessor: "details",
   },
 ];
