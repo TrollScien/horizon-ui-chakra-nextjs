@@ -1,4 +1,4 @@
-import { Box, SimpleGrid } from '@chakra-ui/react'
+import { Box, SimpleGrid, Flex,useColorModeValue,Text, AspectRatio } from '@chakra-ui/react'
 import DevelopmentTable from 'views/admin/dataTables/components/DevelopmentTable'
 import CheckTable from 'views/admin/dataTables/components/CheckTable'
 import ColumnsTable from 'views/admin/dataTables/components/ColumnsTable'
@@ -16,32 +16,32 @@ import tableDataComplex from 'views/admin/dataTables/variables/tableDataComplex.
 import React from 'react'
 import AdminLayout from 'layouts/admin'
 import { TableData } from 'views/admin/default/variables/columnsData'
+import Card from 'components/card/Card'
+import Menu from 'components/menu/MainMenu'
 
 export default function DataTables () {
+  const textColor = useColorModeValue('secondaryGray.900', 'white')
+  const borderColor = useColorModeValue('gray.200', 'whiteAlpha.100')
+
   return (
     <AdminLayout>
       <Box pt={{ base: '130px', md: '80px', xl: '80px' }}>
         <SimpleGrid
           mb='20px'
-          columns={{ sm: 1, md: 2 }}
+          columns={{ sm: 1, md: 1 }}
           spacing={{ base: '20px', xl: '20px' }}
         >
-          <DevelopmentTable
-            columnsData={columnsDataDevelopment}
-            tableData={(tableDataDevelopment as unknown) as TableData[]}
-          />
-          <CheckTable
-            columnsData={columnsDataCheck}
-            tableData={(tableDataCheck as unknown) as TableData[]}
-          />
-          <ColumnsTable
-            columnsData={columnsDataColumns}
-            tableData={(tableDataColumns as unknown) as TableData[]}
-          />
-          <ComplexTable
-            columnsData={columnsDataComplex}
-            tableData={(tableDataComplex as unknown) as TableData[]}
-          />
+  
+            <Card
+              flexDirection='column'
+              w='100%'
+              px='10px'
+              overflowX={{ sm: 'hidden', lg: 'hidden' }}
+            >
+                <AspectRatio ratio={16 / 9}>
+                    <iframe src="https://comunicacionesgalup.speedtestcustom.com"></iframe>
+                </AspectRatio>
+            </Card>
         </SimpleGrid>
       </Box>
     </AdminLayout>

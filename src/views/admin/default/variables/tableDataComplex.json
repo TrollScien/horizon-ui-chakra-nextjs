@@ -2,25 +2,21 @@
   {
     "name":"Falla SF",
     "status": "Finalizado",
-    "date": "18 Apr 2022",
-    "progress": 100 
+    "date": "18 Apr 2022"
   },
   {
     "name":"Falla Sebastopol",
-    "status": "Disable",
-    "date": "18 Apr 2022",
-    "progress": 25.5  
+    "status": "En progreso",
+    "date": "18 Apr 2022"
   },
   {
     "name":"Falla ISP",
-    "status": "Error",
-    "date": "20 May 2021",
-    "progress": 90  
+    "status": "En progreso",
+    "date": "20 May 2021"
   },
   {
     "name":"Mantenimiento programado",
     "status": "Finalizado",
-    "date": "12 Jul 2021",
-    "progress": 100 
+    "date": "12 Jul 2021"
   }
 ]

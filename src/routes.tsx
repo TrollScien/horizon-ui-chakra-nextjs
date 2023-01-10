@@ -10,9 +10,9 @@ import {
 
 // Admin Imports
 import MainDashboard from 'pages/admin/default'
-import NFTMarketplace from 'pages/admin/nft-marketplace'
-import Profile from 'pages/admin/profile'
-import DataTables from 'pages/admin/data-tables'
+import NFTMarketplace from 'pages/admin/pagos'
+import Profile from 'pages/admin/perfil'
+import DataTables from 'pages/admin/uso-datos'
 import RTL from 'pages/rtl/rtl-default'
 
 // Auth Imports
@@ -30,7 +30,7 @@ const routes: IRoute[] = [
   {
     name: 'Pagos',
     layout: '/admin',
-    path: '/nft-marketplace',
+    path: '/pagos',
     icon: (
       <Icon
         as={MdPayment}
@@ -45,28 +45,21 @@ const routes: IRoute[] = [
   {
     name: 'Uso de datos',
     layout: '/admin',
-    path: '/data-tables',
+    path: '/uso-datos',
     icon: <Icon as={MdBarChart} width='20px' height='20px' color='inherit' />,
-    component: Profile
-  },
-  {
-    name: 'Perfil',
-    layout: '/admin',
-    path: '/profile',
-    icon: <Icon as={MdOutlinePersonOutline} width='20px' height='20px' color='inherit' />,
-    component: Profile
+    component: DataTables
   },
   {
     name: 'Soporte',
-    layout: '/auth',
-    path: '/sign-in',
+    layout: '/admin',
+    path: '/soporte',
     icon: <Icon as={MdHeadsetMic} width='20px' height='20px' color='inherit' />,
     component: SignInCentered
   },
   {
     name: 'Test de velocidad',
-    layout: '/rtl',
-    path: '/rtl-default',
+    layout: '/admin',
+    path: '/speedtest',
     icon: <Icon as={MdSpeed} width='20px' height='20px' color='inherit' />,
     component: RTL
   }

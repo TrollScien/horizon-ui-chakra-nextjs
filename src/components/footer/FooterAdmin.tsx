@@ -28,10 +28,7 @@ export default function Footer() {
 				{' '}
 				&copy; {new Date().getFullYear()}
 				<Text as='span' fontWeight='500' ms='4px'>
-					Horizon UI. All Rights Reserved. Made with love by
-					<Link mx='3px' color={textColor} href='https://www.simmmple.com' target='_blank' fontWeight='700'>
-						Simmmple!
-					</Link>
+					Comunicaciones Galup, C.A. Todos los derechos reservados. RIF: J-29384802-4
 				</Text>
 			</Text>
 			<List display='flex'>
@@ -41,16 +38,7 @@ export default function Footer() {
 						md: '44px'
 					}}>
 					<Link fontWeight='500' color={textColor} href='mailto:hello@simmmple.com'>
-						Support
-					</Link>
-				</ListItem>
-				<ListItem
-					me={{
-						base: '20px',
-						md: '44px'
-					}}>
-					<Link fontWeight='500' color={textColor} href='https://www.simmmple.com/licenses'>
-						License
+						Soporte
 					</Link>
 				</ListItem>
 				<ListItem
@@ -59,12 +47,7 @@ export default function Footer() {
 						md: '44px'
 					}}>
 					<Link fontWeight='500' color={textColor} href='https://simmmple.com/terms-of-service'>
-						Terms of Use
-					</Link>
-				</ListItem>
-				<ListItem>
-					<Link fontWeight='500' color={textColor} href='https://www.blog.simmmple.com/'>
-						Blog
+						Términos de uso
 					</Link>
 				</ListItem>
 			</List>

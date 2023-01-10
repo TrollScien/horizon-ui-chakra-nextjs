@@ -41,7 +41,7 @@ import {
   MdBarChart,
   MdFileCopy,
 } from 'react-icons/md'
-import CheckTable from 'views/admin/default/components/CheckTable'
+import HomeServices from 'views/admin/default/components/HomeServices'
 import ComplexTable from 'views/admin/default/components/ComplexTable'
 import DailyTraffic from 'views/admin/default/components/DailyTraffic'
 import PieCard from 'views/admin/default/components/PieCard'
@@ -51,9 +51,11 @@ import WeeklyRevenue from 'views/admin/default/components/WeeklyRevenue'
 import {
   columnsDataCheck,
   columnsDataComplex,
+  columnsHomeServices,
   TableData
 } from 'views/admin/default/variables/columnsData'
 import tableDataCheck from 'views/admin/default/variables/tableDataCheck.json'
+import tableHomeServices from 'views/admin/default/variables/tableHomeServices.json'
 import tableDataComplex from 'views/admin/default/variables/tableDataComplex.json'
 import { isWindowAvailable } from 'utils/navigation'
 import AdminLayout from 'layouts/admin'
@@ -155,9 +157,9 @@ export default function UserReports () {
               columnsData={columnsDataComplex}
               tableData={(tableDataComplex as unknown) as TableData[]}
             />
-            <CheckTable
-              columnsData={columnsDataCheck}
-              tableData={(tableDataCheck as unknown) as TableData[]}
+            <HomeServices
+              columnsData={columnsHomeServices}
+              tableData={(tableHomeServices as unknown) as TableData[]}
             />
           </SimpleGrid>
         </>

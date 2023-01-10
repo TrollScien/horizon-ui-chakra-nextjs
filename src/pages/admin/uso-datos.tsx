@@ -19,7 +19,7 @@ import {
   MdBarChart,
   MdFileCopy
 } from 'react-icons/md'
-import CheckTable from 'views/admin/default/components/CheckTable'
+import DataUsage from 'views/admin/default/components/DataUsage'
 import ComplexTable from 'views/admin/default/components/ComplexTable'
 import DailyTraffic from 'views/admin/default/components/DailyTraffic'
 import PieCard from 'views/admin/default/components/PieCard'
@@ -29,9 +29,10 @@ import WeeklyRevenue from 'views/admin/default/components/WeeklyRevenue'
 import {
   columnsDataCheck,
   columnsDataComplex,
+  columnsDataUsage,
   TableData
 } from 'views/admin/default/variables/columnsData'
-import tableDataCheck from 'views/admin/default/variables/tableDataCheck.json'
+import tableDataUsage from 'views/admin/default/variables/tableDataUsage.json'
 import tableDataComplex from 'views/admin/default/variables/tableDataComplex.json'
 import { isWindowAvailable } from 'utils/navigation'
 import AdminLayout from 'layouts/admin'
@@ -127,17 +128,14 @@ export default function UserReports () {
 
           <SimpleGrid columns={{ base: 1, md: 2, xl: 2 }} gap='20px' mb='20px'>
             <TotalSpent />
-            <WeeklyRevenue />
+            <DailyTraffic />
           </SimpleGrid>
           <SimpleGrid columns={{ base: 1, md: 1, xl: 2 }} gap='20px' mb='20px'>
-            <CheckTable
-              columnsData={columnsDataCheck}
-              tableData={(tableDataCheck as unknown) as TableData[]}
+            <DataUsage
+              columnsData={columnsDataUsage}
+              tableData={(tableDataUsage as unknown) as TableData[]}
             />
-            <SimpleGrid columns={{ base: 1, md: 2, xl: 2 }} gap='20px'>
-              <DailyTraffic />
               <PieCard />
-            </SimpleGrid>
           </SimpleGrid>
         </>
       </Box>

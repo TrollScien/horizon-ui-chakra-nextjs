@@ -1,32 +1,35 @@
 import {
   Flex,
   Table,
-  Progress,
-  Icon,
+  Checkbox,
   Tbody,
   Td,
   Text,
   Th,
   Thead,
   Tr,
+  Icon,
   useColorModeValue
 } from '@chakra-ui/react'
 import { useMemo } from 'react'
 import {
+  ColumnInstance,
+  HeaderGroup,
+  Row,
   useGlobalFilter,
   usePagination,
   useSortBy,
-  useTable
+  useTable,
+  UseTableColumnProps
 } from 'react-table'
 
 // Custom components
 import Card from 'components/card/Card'
 import Menu from 'components/menu/MainMenu'
-
-// Assets
-import { MdCheckCircle, MdCancel, MdOutlineError } from 'react-icons/md'
+import {} from 'components/charts/LineAreaChart'
 import { TableProps } from '../variables/columnsData'
-export default function ColumnsTable (props: TableProps) {
+import { MdCheckCircle, MdCancel, MdOutlineError,MdAddCircle } from 'react-icons/md'
+export default function CheckTable (props: TableProps) {
   const { columnsData, tableData } = props
 
   const columns = useMemo(() => columnsData, [columnsData])
@@ -50,7 +53,7 @@ export default function ColumnsTable (props: TableProps) {
     prepareRow,
     initialState
   } = tableInstance
-  initialState.pageSize = 5
+  initialState.pageSize = 11
 
   const textColor = useColorModeValue('secondaryGray.900', 'white')
   const borderColor = useColorModeValue('gray.200', 'whiteAlpha.100')
@@ -61,53 +64,60 @@ export default function ColumnsTable (props: TableProps) {
       px='0px'
       overflowX={{ sm: 'scroll', lg: 'hidden' }}
     >
-      <Flex px='25px' justify='space-between' mb='10px' align='center'>
+      <Flex px='25px' justify='space-between' align='center'>
         <Text
           color={textColor}
           fontSize='22px'
           fontWeight='700'
           lineHeight='100%'
         >
-          Últimas notificaciones
+          Servicios Contratados
         </Text>
         <Menu />
       </Flex>
       <Table {...getTableProps()} variant='simple' color='gray.500' mb='24px'>
         <Thead>
-          {headerGroups.map((headerGroup, index) => (
+          {headerGroups.map((headerGroup, index: number) => (
             <Tr {...headerGroup.getHeaderGroupProps()} key={index}>
-              {headerGroup.headers.map((column, index) => (
-                <Th
-                  {...column.getHeaderProps(column.getSortByToggleProps())}
-                  pe='10px'
-                  key={index}
-                  borderColor={borderColor}
-                >
-                  <Flex
-                    justify='space-between'
-                    align='center'
-                    fontSize={{ sm: '10px', lg: '12px' }}
-                    color='gray.400'
+              {headerGroup.headers.map(
+                (
+                  column: ColumnInstance & UseTableColumnProps<{}>,
+                  index: number
+                ) => (
+                  <Th
+                    {...column.getHeaderProps(column.getSortByToggleProps())}
+                    pe='10px'
+                    key={index}
+                    borderColor={borderColor}
                   >
-                    {column.render('Header')}
-                  </Flex>
-                </Th>
-              ))}
+                    <Flex
+                      justify='space-between'
+                      align='center'
+                      fontSize={{ sm: '10px', lg: '12px' }}
+                      color='gray.400'
+                    >
+                      {column.render('Header')}
+                    </Flex>
+                  </Th>
+                )
+              )}
             </Tr>
           ))}
         </Thead>
         <Tbody {...getTableBodyProps()}>
-          {page.map((row, index) => {
+          {page.map((row: Row, index: number) => {
             prepareRow(row)
             return (
               <Tr {...row.getRowProps()} key={index}>
-                {row.cells.map((cell, index) => {
+                {row.cells.map((cell, index: number) => {
                   let data
-                  if (cell.column.Header === 'DESCRIPCIÓN') {
+                  if (cell.column.Header === 'PLAN') {
                     data = (
-                      <Text color={textColor} fontSize='sm' fontWeight='700'>
-                        {cell.value}
-                      </Text>
+                      <Flex align='center'>
+                        <Text color={textColor} fontSize='sm' fontWeight='700'>
+                          {cell.value}
+                        </Text>
+                      </Flex>
                     )
                   } else if (cell.column.Header === 'ESTADO') {
                     data = (
@@ -117,24 +127,39 @@ export default function ColumnsTable (props: TableProps) {
                           h='24px'
                           me='5px'
                           color={
-                            cell.value === 'Finalizado'
+                            cell.value === 'ACTIVO'
                               ? 'green.500'
-                              : cell.value === 'En progreso'
+                              : cell.value === 'TERMINADO'
+                              ? 'red.500'
+                              : cell.value === 'SUSPENDIDO'
                               ? 'orange.500'
                               : null
                           }
                           as={
-                            cell.value === 'Finalizado'
+                            cell.value === 'ACTIVO'
                               ? MdCheckCircle
-                              : cell.value === 'En progreso'
+                              : cell.value === 'TERMINADO'
+                              ? MdCancel
+                              : cell.value === 'SUSPENDIDO'
                               ? MdOutlineError
                               : null
                           }
                         />
-                        <Text color={textColor} fontSize='sm' fontWeight='700'>
+                        <Text
+                          me='10px'
+                          color={textColor}
+                          fontSize='sm'
+                          fontWeight='700'
+                        >
                           {cell.value}
                         </Text>
                       </Flex>
+                    )
+                  } else if (cell.column.Header === 'CONTRATO') {
+                    data = (
+                      <Text color={textColor} fontSize='sm' fontWeight='700'>
+                        {cell.value}
+                      </Text>
                     )
                   } else if (cell.column.Header === 'FECHA') {
                     data = (
@@ -142,17 +167,20 @@ export default function ColumnsTable (props: TableProps) {
                         {cell.value}
                       </Text>
                     )
-                  } else if (cell.column.Header === 'PROGRESS') {
+                  }
+                  else if (cell.column.Header === 'DETALLES') {
                     data = (
-                      <Flex align='center'>
-                        <Progress
-                          variant='table'
-                          colorScheme='brandScheme'
-                          h='8px'
-                          w='108px'
-                          />
-                          {cell.value}
-                      </Flex>
+                        <Icon
+                          w='18px'
+                          h='18px'
+                          me='5px'
+                          color={textColor}
+                          as={
+                            cell.value === 'detalles'
+                              ? MdAddCircle
+                              : MdAddCircle
+                          }
+                        />
                     )
                   }
                   return (
@@ -160,8 +188,6 @@ export default function ColumnsTable (props: TableProps) {
                       {...cell.getCellProps()}
                       key={index}
                       fontSize={{ sm: '14px' }}
-                      maxH='30px !important'
-                      py='8px'
                       minW={{ sm: '150px', md: '200px', lg: 'auto' }}
                       borderColor='transparent'
                     >
@@ -169,6 +195,7 @@ export default function ColumnsTable (props: TableProps) {
                     </Td>
                   )
                 })}
+
               </Tr>
             )
           })}

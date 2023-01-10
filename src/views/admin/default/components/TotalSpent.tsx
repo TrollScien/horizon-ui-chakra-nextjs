@@ -77,12 +77,7 @@ export default function TotalSpent(props: { [x: string]: any }) {
 						</Flex>
 					</Flex>
 
-					<Flex align='center'>
-						<Icon as={IoCheckmarkCircle} color='green.500' me='4px' />
-						<Text color='green.500' fontSize='md' fontWeight='700'>
-							On track
-						</Text>
-					</Flex>
+			
 				</Flex>
 				<Box minH='260px' minW='75%' mt='auto'>
 					<LineChart chartData={lineChartDataTotalSpent} chartOptions={lineChartOptionsTotalSpent} />

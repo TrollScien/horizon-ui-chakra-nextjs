@@ -21,7 +21,7 @@ export default function Conversion(props: { [x: string]: any }) {
 				w='100%'
 				mb='8px'>
 				<Text color={textColor} fontSize='md' fontWeight='600' mt='4px'>
-					Your Pie Chart
+					Tu consumo
 				</Text>
 				<Select fontSize='sm' variant='subtle' defaultValue='monthly' width='unset' fontWeight='700'>
 					<option value='daily'>Daily</option>
@@ -44,7 +44,7 @@ export default function Conversion(props: { [x: string]: any }) {
 					<Flex align='center'>
 						<Box h='8px' w='8px' bg='brand.500' borderRadius='50%' me='4px' />
 						<Text fontSize='xs' color='secondaryGray.600' fontWeight='700' mb='5px'>
-							Your files
+							Consumido
 						</Text>
 					</Flex>
 					<Text fontSize='lg' color={textColor} fontWeight='700'>
@@ -56,11 +56,11 @@ export default function Conversion(props: { [x: string]: any }) {
 					<Flex align='center'>
 						<Box h='8px' w='8px' bg='#6AD2FF' borderRadius='50%' me='4px' />
 						<Text fontSize='xs' color='secondaryGray.600' fontWeight='700' mb='5px'>
-							System
+							Disponible
 						</Text>
 					</Flex>
 					<Text fontSize='lg' color={textColor} fontWeight='700'>
-						25%
+						37%
 					</Text>
 				</Flex>
 			</Card>

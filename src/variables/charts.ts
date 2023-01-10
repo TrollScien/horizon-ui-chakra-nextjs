@@ -309,7 +309,7 @@ export const barChartOptionsConsumption: ApexGeneric = {
 };
 
 export const pieChartOptions: ApexGeneric = {
-  labels: ["Your files", "System", "Empty"],
+  labels: ["Consumido", "Disponible"],
   colors: ["#4318FF", "#6AD2FF", "#EFF4FB"],
   chart: {
     width: "50px",
@@ -347,7 +347,7 @@ export const pieChartOptions: ApexGeneric = {
   },
 };
 
-export const pieChartData = [63, 25, 12];
+export const pieChartData = [63, 37];
 
 // Total Spent Default
 

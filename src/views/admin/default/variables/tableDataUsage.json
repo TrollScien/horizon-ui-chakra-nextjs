@@ -1,0 +1,36 @@
+[{
+  "name":"Hogar Fibra Básico",
+  "quantity": 2458, 
+  "cuota": "1300 GB",
+  "status": "ACTIVO",
+  "consumo": 1225
+},
+{
+  "name":"Emprendedor Fibra Plus",
+  "quantity": 1485, 
+  "cuota": "1500 GB",
+  "status": "SUSPENDIDO",
+  "consumo": 1485
+},
+{
+  "name":"Hogar Fibra Inicio",
+  "quantity": 1024, 
+  "cuota": "1300 GB",
+  "status": "ACTIVO",
+  "consumo": 1567
+},
+{
+  "name":"Emprendedor Wireless Básico",
+  "quantity": 858, 
+  "cuota": "1500 GB",
+  "status": "TERMINADO",
+  "consumo": 1765
+},
+{
+  "name":"Hogar Wireless Plus",
+  "quantity": 258, 
+  "cuota": "1300 GB",
+  "status": "ACTIVO",
+  "consumo": 1899
+}
+]
